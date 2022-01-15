@@ -46,7 +46,7 @@ let createTaskEl = function(taskDataObj) {
   listItemEl.setAttribute("data-task-id", taskIdCounter);
 
   console.log(taskDataObj);
-console.log(taskDataObj.status);
+  console.log(taskDataObj.status);
 
   let taskInfoEl = document.createElement("div");
   taskInfoEl.className = "task-info";
@@ -56,6 +56,8 @@ console.log(taskDataObj.status);
   taskDataObj.id = taskIdCounter;
 
   tasks.push(taskDataObj);
+
+  saveTasks();
 
   // create task actions (buttons and select) for task
   let taskActionsEl = createTaskActions(taskIdCounter);
@@ -117,9 +119,10 @@ let completeEditTask = function(taskName, taskType, taskId) {
     if(tasks[i].id === parseInt(taskId)){
       tasks[i].name = taskName;
       tasks[i].type = taskType;
-
     }
   };
+
+  saveTasks()
 
   alert("Task Updated!");
 
@@ -145,7 +148,7 @@ let taskButtonHandler = function(event) {
 };
 
 let taskStatusChangeHandler = function(event) {
-  console.log(event.target.value);
+  
 
   // find task list item based on event.target's data-task-id attribute
   let taskId = event.target.getAttribute("data-task-id");
@@ -168,7 +171,8 @@ let taskStatusChangeHandler = function(event) {
       tasks[i].status = statusValue;
     }
   };
-  console.log(tasks)
+  
+  saveTasks();
 };
 
 let editTask = function(taskId) {
@@ -209,7 +213,13 @@ let deleteTask = function(taskId) {
     }
   }
   tasks = updateTaskArr;
+
+  saveTasks();
 };
+
+let saveTasks = function(){
+  localStorage.setItem("tasks", JSON.stringify(tasks));
+}
 
 // Create a new task
 formEl.addEventListener("submit", taskFormHandler);

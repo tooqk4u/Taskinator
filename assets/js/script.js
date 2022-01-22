@@ -146,7 +146,7 @@ let taskButtonHandler = function (event) {
     let taskId = targetEl.getAttribute("data-task-id");
     editTask(taskId);
   } else if (targetEl.matches(".delete-btn")) {
-    console.log("delete", targetEl);
+    
     let taskId = targetEl.getAttribute("data-task-id");
     deleteTask(taskId);
   }
@@ -174,7 +174,7 @@ let taskStatusChangeHandler = function (event) {
   for (let i = 0; i < tasks.length; i++) {
     if (tasks[i].id === parseInt(taskId)) {
       tasks[i].status = statusValue;
-    }console.log(tasks)
+    }
   }
 
   saveTasks();
@@ -215,7 +215,7 @@ let deleteTask = function (taskId) {
       updatedTaskArr.push(tasks[i]);
     }
   }
-  tasks = updateTaskArr;
+  tasks = updatedTaskArr;
 
   saveTasks();
 };
@@ -226,22 +226,21 @@ let saveTasks = function () {
 
 let loadTasks = function () {
   let savedTasks = localStorage.getItem("tasks");
-  console.log(savedTasks);
+  
 
   if (savedTasks === null) {
     return false;
   }
 
-  console.log("Saved tasks found!");
+  
 
   savedTasks = JSON.parse(savedTasks);
-  console.log(tasks)
+  
 
   for (let i = 0; i < savedTasks.length; i++) {
     createTaskEl(savedTasks[i]);
 
-    console.log(tasks[i]);
-
+    
   }
 
 };
